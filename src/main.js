@@ -18,7 +18,20 @@ function createWebhook(){
 }
 
 function postLineMessage(message){
-    // stub
+    var scriptProp = PropertiesService.getScriptProperties().getProperties();
+    var accessToken = scriptProp.LINE_TOKEN;
+
+    var options = {
+        'method': 'post',
+        'headers': {
+            'Authorization': 'Bearer ' + accessToken,
+        },
+        'payload': {
+            'message': message
+        }
+    };
+
+    UrlFetchApp.fetch('https://notify-api.line.me/api/notify', options);
 }
 
 function doPost(e){
