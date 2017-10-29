@@ -35,5 +35,21 @@ function postLineMessage(message){
 }
 
 function doPost(e){
-    // stub
+	var contents = JSON.parse(e.postData.contents);
+	var actionType = contents.action.type;
+	var cardName = contents.action.data.card.name;
+	var message = 'none';
+  
+	if(actionType == 'commentCard'){
+		var text = contents.action.data.text;
+		message = cardName + 'にコメントが追加されました：\n' + text.slice(0, 100);
+	}
+
+	if(actionType == 'createCard'){
+		message = '新しいタスクが追加されました：\n' + cardName;
+	}
+
+	if(message != 'none'){
+		postLineMessage(message);
+	}
 }
